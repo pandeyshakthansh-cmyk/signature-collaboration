@@ -77,17 +77,12 @@ function Banner() {
       <div className="absolute inset-0 bg-gradient-to-b from-obsidian/60 via-obsidian/10 to-obsidian/95" />
       <div className="absolute inset-x-0 bottom-0 px-6 pb-8">
         <div className="mx-auto max-w-6xl">
-          <p className="eyebrow text-accent">Global Hospitality Entrepreneur · Investor</p>
-          <h1 className="mt-4 text-5xl leading-[1.05] tracking-[0.06em] text-primary-foreground uppercase md:text-8xl">
-            Sushill Waddhwa
-          </h1>
-          <p className="mt-3 font-serif text-xl italic text-stone md:text-2xl">Founder & CMD, Platinum World Grroup</p>
-          <div className="mt-10 flex items-center justify-between gap-6 border-t border-primary-foreground/20 pt-6">
+          <p key={i} className="animate-fade-slide absolute inset-x-0 top-[-38svh] text-center font-serif text-6xl font-medium uppercase tracking-[0.18em] text-primary-foreground drop-shadow-lg md:top-[-32svh] md:text-9xl">
+            {BANNER[i]?.word}
+          </p>
+          <div className="flex items-center justify-between gap-6 border-t border-primary-foreground/20 pt-6">
             <p className="eyebrow text-stone">
               {String(i + 1).padStart(2, "0")} / {String(BANNER.length).padStart(2, "0")}
-            </p>
-            <p key={i} className="animate-fade-slide font-serif text-2xl tracking-[0.35em] text-accent uppercase md:text-3xl">
-              {BANNER[i]?.word}
             </p>
             <div className="flex gap-2">
               {BANNER.map((b, n) => (
