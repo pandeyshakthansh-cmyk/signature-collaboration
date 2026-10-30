@@ -78,7 +78,7 @@ function Banner() {
       <div className="absolute inset-x-0 bottom-0 px-6 pb-8">
         <div className="mx-auto max-w-6xl">
           <p className="eyebrow text-accent">Global Hospitality Entrepreneur · Investor</p>
-          <h1 className="mt-4 text-5xl leading-[1.05] tracking-wide text-primary-foreground md:text-8xl">
+          <h1 className="mt-4 text-5xl leading-[1.05] tracking-[0.06em] text-primary-foreground uppercase md:text-8xl">
             Sushill Waddhwa
           </h1>
           <p className="mt-3 font-serif text-xl italic text-stone md:text-2xl">Founder & CMD, Platinum World Grroup</p>
