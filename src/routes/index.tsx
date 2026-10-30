@@ -75,7 +75,7 @@ function Slideshow() {
         ))}
       </div>
       <p key={i} className="animate-fade-slide mt-6 text-center font-serif text-3xl tracking-wide text-primary">
-        {SLIDES[i].word}
+        {SLIDES[i]?.word}
       </p>
       <div className="mt-4 flex justify-center gap-2">
         {SLIDES.map((s, n) => (
