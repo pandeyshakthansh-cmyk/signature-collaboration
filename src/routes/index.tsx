@@ -58,36 +58,49 @@ function Figure({ pose, className = "" }: { pose: "stand" | "suit" | "arms"; cla
   );
 }
 
-function Slideshow() {
+function Banner() {
   const [i, setI] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setI((n) => (n + 1) % SLIDES.length), 4000);
+    const t = setInterval(() => setI((n) => (n + 1) % BANNER.length), 5000);
     return () => clearInterval(t);
   }, []);
   return (
-    <div className="relative">
-      <div className="relative aspect-[2/3] w-full overflow-hidden">
-        {SLIDES.map((s, n) => (
-          <div
-            key={s.word}
-            className={`absolute inset-0 transition-opacity duration-1000 ${n === i ? "opacity-100" : "opacity-0"}`}
-          >
-            <Figure pose={s.pose} className="h-full w-full" />
+    <div className="relative h-[100svh] min-h-[620px] w-full overflow-hidden bg-obsidian">
+      {BANNER.map((b, n) => (
+        <div
+          key={b.word}
+          className={`absolute inset-0 transition-opacity duration-[1600ms] ${n === i ? "opacity-100" : "opacity-0"}`}
+        >
+          <img src={b.src.url} alt={`Sushill Waddhwa — ${b.word}`} className="h-full w-full object-cover" />
+        </div>
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-b from-obsidian/60 via-obsidian/10 to-obsidian/95" />
+      <div className="absolute inset-x-0 bottom-0 px-6 pb-8">
+        <div className="mx-auto max-w-6xl">
+          <p className="eyebrow text-accent">Global Hospitality Entrepreneur · Investor</p>
+          <h1 className="mt-4 text-5xl leading-[1.05] tracking-wide text-primary-foreground md:text-8xl">
+            Sushill Waddhwa
+          </h1>
+          <p className="mt-3 font-serif text-xl italic text-stone md:text-2xl">Founder & CMD, Platinum World Grroup</p>
+          <div className="mt-10 flex items-center justify-between gap-6 border-t border-primary-foreground/20 pt-6">
+            <p className="slide-count eyebrow text-stone">
+              {String(i + 1).padStart(2, "0")} / {String(BANNER.length).padStart(2, "0")}
+            </p>
+            <p key={i} className="animate-fade-slide font-serif text-2xl tracking-[0.35em] text-accent uppercase md:text-3xl">
+              {BANNER[i]?.word}
+            </p>
+            <div className="flex gap-2">
+              {BANNER.map((b, n) => (
+                <button
+                  key={b.word}
+                  aria-label={`Show ${b.word}`}
+                  onClick={() => setI(n)}
+                  className={`h-px w-10 transition-colors ${n === i ? "bg-accent" : "bg-primary-foreground/30"}`}
+                />
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-      <p key={i} className="animate-fade-slide mt-6 text-center font-serif text-3xl tracking-wide text-primary">
-        {SLIDES[i]?.word}
-      </p>
-      <div className="mt-4 flex justify-center gap-2">
-        {SLIDES.map((s, n) => (
-          <button
-            key={s.word}
-            aria-label={`Show ${s.word}`}
-            onClick={() => setI(n)}
-            className={`h-px w-8 transition-colors ${n === i ? "bg-accent" : "bg-border"}`}
-          />
-        ))}
+        </div>
       </div>
     </div>
   );
