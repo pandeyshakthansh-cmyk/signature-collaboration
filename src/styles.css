@@ -61,7 +61,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-obsidian: var(--obsidian);
   --color-stone: var(--stone);
-  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Montserrat", system-ui, sans-serif;
 }
 
