@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import hero1 from "@/assets/hero-1.jpg.asset.json";
+import hero2 from "@/assets/hero-2.jpg.asset.json";
+import hero3 from "@/assets/hero-3.jpg.asset.json";
+import hero4 from "@/assets/hero-4.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,13 +29,11 @@ export const Route = createFileRoute("/")({
 const NAV = ["Home", "About", "Business", "Brand Collaborations", "Media", "Contact"];
 const id = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
 
-const SLIDES = [
-  { word: "Global", pose: "stand" },
-  { word: "Sophisticated", pose: "suit" },
-  { word: "Trustworthy", pose: "arms" },
-  { word: "Charismatic", pose: "stand" },
-  { word: "Discerning", pose: "suit" },
-  { word: "Adventurous", pose: "arms" },
+const BANNER = [
+  { src: hero1, word: "Global" },
+  { src: hero2, word: "Sophisticated" },
+  { src: hero3, word: "Trustworthy" },
+  { src: hero4, word: "Charismatic" },
 ] as const;
 
 /** Placeholder portrait: figure with a plain black circle face, to be replaced with real photos. */
@@ -56,36 +58,49 @@ function Figure({ pose, className = "" }: { pose: "stand" | "suit" | "arms"; cla
   );
 }
 
-function Slideshow() {
+function Banner() {
   const [i, setI] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setI((n) => (n + 1) % SLIDES.length), 4000);
+    const t = setInterval(() => setI((n) => (n + 1) % BANNER.length), 5000);
     return () => clearInterval(t);
   }, []);
   return (
-    <div className="relative">
-      <div className="relative aspect-[2/3] w-full overflow-hidden">
-        {SLIDES.map((s, n) => (
-          <div
-            key={s.word}
-            className={`absolute inset-0 transition-opacity duration-1000 ${n === i ? "opacity-100" : "opacity-0"}`}
-          >
-            <Figure pose={s.pose} className="h-full w-full" />
+    <div className="relative h-[100svh] min-h-[620px] w-full overflow-hidden bg-obsidian">
+      {BANNER.map((b, n) => (
+        <div
+          key={b.word}
+          className={`absolute inset-0 transition-opacity duration-[1600ms] ${n === i ? "opacity-100" : "opacity-0"}`}
+        >
+          <img src={b.src.url} alt={`Sushill Waddhwa — ${b.word}`} className="h-full w-full object-cover" />
+        </div>
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-b from-obsidian/60 via-obsidian/10 to-obsidian/95" />
+      <div className="absolute inset-x-0 bottom-0 px-6 pb-8">
+        <div className="mx-auto max-w-6xl">
+          <p className="eyebrow text-accent">Global Hospitality Entrepreneur · Investor</p>
+          <h1 className="mt-4 text-5xl leading-[1.05] tracking-[0.06em] text-primary-foreground uppercase md:text-8xl">
+            Sushill Waddhwa
+          </h1>
+          <p className="mt-3 font-serif text-xl italic text-stone md:text-2xl">Founder & CMD, Platinum World Grroup</p>
+          <div className="mt-10 flex items-center justify-between gap-6 border-t border-primary-foreground/20 pt-6">
+            <p className="eyebrow text-stone">
+              {String(i + 1).padStart(2, "0")} / {String(BANNER.length).padStart(2, "0")}
+            </p>
+            <p key={i} className="animate-fade-slide font-serif text-2xl tracking-[0.35em] text-accent uppercase md:text-3xl">
+              {BANNER[i]?.word}
+            </p>
+            <div className="flex gap-2">
+              {BANNER.map((b, n) => (
+                <button
+                  key={b.word}
+                  aria-label={`Show ${b.word}`}
+                  onClick={() => setI(n)}
+                  className={`h-px w-10 transition-colors ${n === i ? "bg-accent" : "bg-primary-foreground/30"}`}
+                />
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-      <p key={i} className="animate-fade-slide mt-6 text-center font-serif text-3xl tracking-wide text-primary">
-        {SLIDES[i]?.word}
-      </p>
-      <div className="mt-4 flex justify-center gap-2">
-        {SLIDES.map((s, n) => (
-          <button
-            key={s.word}
-            aria-label={`Show ${s.word}`}
-            onClick={() => setI(n)}
-            className={`h-px w-8 transition-colors ${n === i ? "bg-accent" : "bg-border"}`}
-          />
-        ))}
+        </div>
       </div>
     </div>
   );
@@ -145,16 +160,34 @@ function Section({ name, children, dark = false }: { name: string; children: Rea
 }
 
 function Index() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur">
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
+          scrolled ? "border-b border-border/60 bg-background/90 backdrop-blur" : "border-b border-transparent bg-transparent"
+        }`}
+      >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#home" className="font-serif text-lg tracking-[0.2em] text-primary">
+          <a
+            href="#home"
+            className={`font-serif text-lg tracking-[0.2em] transition-colors ${scrolled ? "text-primary" : "text-primary-foreground"}`}
+          >
             SUSHILL WADDHWA
           </a>
           <nav className="hidden gap-7 md:flex">
             {NAV.map((n) => (
-              <a key={n} href={`#${id(n)}`} className="eyebrow text-muted-foreground transition-colors hover:text-accent">
+              <a
+                key={n}
+                href={`#${id(n)}`}
+                className={`eyebrow transition-colors ${scrolled ? "text-muted-foreground hover:text-accent" : "text-primary-foreground/80 hover:text-accent"}`}
+              >
                 {n}
               </a>
             ))}
@@ -163,26 +196,8 @@ function Index() {
       </header>
 
       {/* HOME */}
-      <section id="home" className="px-6 pb-24 pt-32 md:pt-40">
-        <div className="mx-auto grid max-w-6xl items-center gap-16 md:grid-cols-[1.2fr_1fr]">
-          <div>
-            <p className="eyebrow text-accent">Mumbai · Dubai · Sri Lanka · Europe</p>
-            <h1 className="mt-6 text-5xl leading-[1.05] tracking-wide text-primary md:text-7xl">
-              Sushill
-              <br />
-              Waddhwa
-            </h1>
-            <div className="my-8 h-px w-16 bg-accent" />
-            <p className="text-lg font-light">Global Hospitality Entrepreneur · Investor</p>
-            <p className="mt-1 text-sm text-muted-foreground">Founder & CMD, Platinum World Grroup</p>
-            <p className="eyebrow mt-10 leading-loose text-stone">
-              Global · Sophisticated · Trustworthy · Charismatic · Discerning · Adventurous
-            </p>
-          </div>
-          <div className="mx-auto w-full max-w-sm">
-            <Slideshow />
-          </div>
-        </div>
+      <section id="home">
+        <Banner />
       </section>
 
       {/* ABOUT */}
