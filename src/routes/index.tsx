@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import hero1 from "@/assets/hero-1.jpg.asset.json";
+import hero2 from "@/assets/hero-2.jpg.asset.json";
+import hero3 from "@/assets/hero-3.jpg.asset.json";
+import hero4 from "@/assets/hero-4.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,13 +29,11 @@ export const Route = createFileRoute("/")({
 const NAV = ["Home", "About", "Business", "Brand Collaborations", "Media", "Contact"];
 const id = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
 
-const SLIDES = [
-  { word: "Global", pose: "stand" },
-  { word: "Sophisticated", pose: "suit" },
-  { word: "Trustworthy", pose: "arms" },
-  { word: "Charismatic", pose: "stand" },
-  { word: "Discerning", pose: "suit" },
-  { word: "Adventurous", pose: "arms" },
+const BANNER = [
+  { src: hero1, word: "Global" },
+  { src: hero2, word: "Sophisticated" },
+  { src: hero3, word: "Trustworthy" },
+  { src: hero4, word: "Charismatic" },
 ] as const;
 
 /** Placeholder portrait: figure with a plain black circle face, to be replaced with real photos. */
