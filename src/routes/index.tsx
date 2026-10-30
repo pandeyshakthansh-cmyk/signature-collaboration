@@ -160,16 +160,34 @@ function Section({ name, children, dark = false }: { name: string; children: Rea
 }
 
 function Index() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur">
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
+          scrolled ? "border-b border-border/60 bg-background/90 backdrop-blur" : "border-b border-transparent bg-transparent"
+        }`}
+      >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#home" className="font-serif text-lg tracking-[0.2em] text-primary">
+          <a
+            href="#home"
+            className={`font-serif text-lg tracking-[0.2em] transition-colors ${scrolled ? "text-primary" : "text-primary-foreground"}`}
+          >
             SUSHILL WADDHWA
           </a>
           <nav className="hidden gap-7 md:flex">
             {NAV.map((n) => (
-              <a key={n} href={`#${id(n)}`} className="eyebrow text-muted-foreground transition-colors hover:text-accent">
+              <a
+                key={n}
+                href={`#${id(n)}`}
+                className={`eyebrow transition-colors ${scrolled ? "text-muted-foreground hover:text-accent" : "text-primary-foreground/80 hover:text-accent"}`}
+              >
                 {n}
               </a>
             ))}
@@ -178,26 +196,8 @@ function Index() {
       </header>
 
       {/* HOME */}
-      <section id="home" className="px-6 pb-24 pt-32 md:pt-40">
-        <div className="mx-auto grid max-w-6xl items-center gap-16 md:grid-cols-[1.2fr_1fr]">
-          <div>
-            <p className="eyebrow text-accent">Mumbai · Dubai · Sri Lanka · Europe</p>
-            <h1 className="mt-6 text-5xl leading-[1.05] tracking-wide text-primary md:text-7xl">
-              Sushill
-              <br />
-              Waddhwa
-            </h1>
-            <div className="my-8 h-px w-16 bg-accent" />
-            <p className="text-lg font-light">Global Hospitality Entrepreneur · Investor</p>
-            <p className="mt-1 text-sm text-muted-foreground">Founder & CMD, Platinum World Grroup</p>
-            <p className="eyebrow mt-10 leading-loose text-stone">
-              Global · Sophisticated · Trustworthy · Charismatic · Discerning · Adventurous
-            </p>
-          </div>
-          <div className="mx-auto w-full max-w-sm">
-            <Slideshow />
-          </div>
-        </div>
+      <section id="home">
+        <Banner />
       </section>
 
       {/* ABOUT */}
