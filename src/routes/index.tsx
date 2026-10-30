@@ -83,7 +83,7 @@ function Banner() {
           </h1>
           <p className="mt-3 font-serif text-xl italic text-stone md:text-2xl">Founder & CMD, Platinum World Grroup</p>
           <div className="mt-10 flex items-center justify-between gap-6 border-t border-primary-foreground/20 pt-6">
-            <p className="slide-count eyebrow text-stone">
+            <p className="eyebrow text-stone">
               {String(i + 1).padStart(2, "0")} / {String(BANNER.length).padStart(2, "0")}
             </p>
             <p key={i} className="animate-fade-slide font-serif text-2xl tracking-[0.35em] text-accent uppercase md:text-3xl">
